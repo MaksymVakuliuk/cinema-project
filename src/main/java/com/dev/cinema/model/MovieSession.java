@@ -1,11 +1,11 @@
 package com.dev.cinema.model;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,9 +14,11 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
     private Movie movie;
+    @ManyToOne
     private CinemaHall cinemaHall;
-    private LocalDateTime localDateTime;
+    private LocalDateTime showTime;
 
     public Long getId() {
         return id;
@@ -42,36 +44,21 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public LocalDateTime getShowTime() {
+        return showTime;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setShowTime(LocalDateTime showTime) {
+        this.showTime = showTime;
     }
 
     @Override
     public String toString() {
-        return "MovieSession{" +
-                "id=" + id +
-                ", movie=" + movie +
-                ", cinemaHall=" + cinemaHall +
-                ", localDateTime=" + localDateTime +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MovieSession that = (MovieSession) o;
-        return Objects.equals(movie, that.movie) &&
-                Objects.equals(cinemaHall, that.cinemaHall) &&
-                Objects.equals(localDateTime, that.localDateTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(movie, cinemaHall, localDateTime);
+        return "MovieSession{"
+                + "id=" + id
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + ", localDateTime=" + showTime
+                + '}';
     }
 }
