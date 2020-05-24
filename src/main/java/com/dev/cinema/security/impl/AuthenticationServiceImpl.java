@@ -2,11 +2,13 @@ package com.dev.cinema.security.impl;
 
 import com.dev.cinema.exceptions.AuthenticationException;
 import com.dev.cinema.lib.Inject;
+import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.User;
 import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.UserService;
 import com.dev.cinema.util.HashUtil;
 
+@Service
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
     private UserService userService;
