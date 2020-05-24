@@ -54,7 +54,7 @@ public class MovieSessionDaoImpl implements MovieSessionService {
             return session.createQuery(criteriaQuery.where(moviePredicate, datePredicate))
                     .getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Error retrieving all movies", e);
+            throw new RuntimeException("Error retrieving all MovieSessions", e);
         } finally {
             if (session != null) {
                 session.close();

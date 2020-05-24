@@ -44,7 +44,7 @@ public class CinemaHallDaoImpl implements CinemaHallService {
             criteriaQuery.from(CinemaHall.class);
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Error retrieving all CinemaHall", e);
+            throw new RuntimeException("Error retrieving all CinemaHalls", e);
         } finally {
             if (session != null) {
                 session.close();

@@ -44,7 +44,7 @@ public class MovieDaoImpl implements MovieDao {
             criteriaQuery.from(Movie.class);
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Error retrieving all movies", e);
+            throw new RuntimeException("Error retrieving all Movies", e);
         } finally {
             if (session != null) {
                 session.close();
