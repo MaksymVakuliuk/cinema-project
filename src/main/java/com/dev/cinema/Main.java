@@ -1,23 +1,70 @@
 package com.dev.cinema;
 
 import com.dev.cinema.lib.Injector;
+import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
+import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
+import com.dev.cinema.service.MovieSessionService;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Main {
     private static final Injector INJECTOR = Injector.getInstance("com.dev.cinema");
+    private static MovieService movieService =
+            (MovieService) INJECTOR.getInstance(MovieService.class);
+    private static CinemaHallService cinemaHallService =
+            (CinemaHallService) INJECTOR.getInstance(CinemaHallService.class);
+    private static MovieSessionService movieSessionService =
+            (MovieSessionService) INJECTOR.getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
-        Movie movie = new Movie();
-        movie.setTitle("Fast and Furious");
-        MovieService movieService = (MovieService) INJECTOR.getInstance(MovieService.class);
-        movieService.add(movie);
+        Movie fastAndFurious = new Movie();
+        fastAndFurious.setTitle("Fast and Furious");
+        fastAndFurious.setDescription("Cars");
+        movieService.add(fastAndFurious);
 
-        Movie movie1 = new Movie();
-        movie.setTitle("Fast and Furious 2");
-        movieService = (MovieService) INJECTOR.getInstance(MovieService.class);
-        movieService.add(movie);
+        Movie readyPlayerOne = new Movie();
+        readyPlayerOne.setTitle("Ready Player One");
+        fastAndFurious.setDescription("Games");
+        movieService.add(readyPlayerOne);
 
         movieService.getAll().forEach(System.out::println);
+
+        CinemaHall yellowCinemaHall = new CinemaHall();
+        yellowCinemaHall.setCapacity(75);
+        yellowCinemaHall.setDescription("yellow");
+        cinemaHallService.add(yellowCinemaHall);
+
+        CinemaHall blueCinemaHall = new CinemaHall();
+        blueCinemaHall.setCapacity(120);
+        blueCinemaHall.setDescription("blue");
+        cinemaHallService.add(blueCinemaHall);
+
+        cinemaHallService.getAll().forEach(System.out::println);
+
+        MovieSession fastAndFuriousSession = new MovieSession();
+        fastAndFuriousSession.setMovie(fastAndFurious);
+        fastAndFuriousSession.setCinemaHall(yellowCinemaHall);
+        fastAndFuriousSession.setShowTime(LocalDateTime.of(2020,6, 21, 19, 0));
+        movieSessionService.add(fastAndFuriousSession);
+
+        MovieSession readyPlayerOneSession = new MovieSession();
+        readyPlayerOneSession.setMovie(readyPlayerOne);
+        readyPlayerOneSession.setCinemaHall(blueCinemaHall);
+        readyPlayerOneSession.setShowTime(LocalDateTime.of(2020,6, 22, 22, 0));
+        movieSessionService.add(readyPlayerOneSession);
+
+        LocalDate day1 = LocalDate.of(2020, 6,21);
+        LocalDate day2 = LocalDate.of(2020, 6,22);
+        movieSessionService.findAvailableSession(readyPlayerOne.getId(), day1)
+                .forEach(System.out::println);
+        movieSessionService.findAvailableSession(readyPlayerOne.getId(), day2)
+                .forEach(System.out::println);
+        movieSessionService.findAvailableSession(fastAndFurious.getId(), day1)
+                .forEach(System.out::println);
+        movieSessionService.findAvailableSession(fastAndFurious.getId(), day2)
+                .forEach(System.out::println);
     }
 }
