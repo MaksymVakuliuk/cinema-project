@@ -7,7 +7,6 @@ import com.dev.cinema.model.Order;
 import com.dev.cinema.model.User;
 import com.dev.cinema.util.HibernateUtil;
 import java.util.List;
-import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -39,7 +38,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getOrderHistory(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-        Query<Order> query = session.createQuery("SELECT DISTINCT o FROM Order o "
+            Query<Order> query = session.createQuery("SELECT DISTINCT o FROM Order o "
                     + "LEFT JOIN FETCH o.tickets t "
                     + "LEFT JOIN FETCH t.user "
                     + "LEFT JOIN FETCH t.movieSession mS "
