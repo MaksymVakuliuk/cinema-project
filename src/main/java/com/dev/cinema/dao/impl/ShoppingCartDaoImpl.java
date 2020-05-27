@@ -44,8 +44,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
                             + " WHERE sc.user = :user",
                             ShoppingCart.class);
             query.setParameter("user", user);
-            var shoppingCart = query.uniqueResult();
-            return shoppingCart;
+            return query.uniqueResult();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving shopping cart by user", e);
         }
