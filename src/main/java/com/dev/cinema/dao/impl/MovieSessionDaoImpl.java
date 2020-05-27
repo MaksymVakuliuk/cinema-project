@@ -46,6 +46,8 @@ public class MovieSessionDaoImpl implements MovieSessionService {
             CriteriaQuery<MovieSession> criteriaQuery =
                     session.getCriteriaBuilder().createQuery(MovieSession.class);
             Root<MovieSession> root = criteriaQuery.from(MovieSession.class);
+            root.fetch("movie");
+            root.fetch("cinemaHall");
             Predicate moviePredicate = cb.equal(root.get("movie"), movieId);
             Predicate datePredicate = cb.between(root.get("showTime"),
                     date.atStartOfDay(),

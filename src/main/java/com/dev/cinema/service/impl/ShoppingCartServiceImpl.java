@@ -9,6 +9,7 @@ import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.ShoppingCartService;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -40,5 +41,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         var shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
         shoppingCartDao.add(shoppingCart);
+    }
+
+    @Override
+    public void clear(ShoppingCart shoppingCart) {
+        shoppingCart.setTickets(List.of());
+        shoppingCart.setOrderDate(LocalDateTime.now());
+        shoppingCartDao.update(shoppingCart);
     }
 }
