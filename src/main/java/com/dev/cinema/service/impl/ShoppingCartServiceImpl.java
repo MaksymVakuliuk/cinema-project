@@ -10,6 +10,7 @@ import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.ShoppingCartService;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -45,7 +46,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void clear(ShoppingCart shoppingCart) {
-        shoppingCart.setTickets(List.of());
+        shoppingCart.setTickets(Collections.emptyList());
         shoppingCart.setOrderDate(LocalDateTime.now());
         shoppingCartDao.update(shoppingCart);
     }
