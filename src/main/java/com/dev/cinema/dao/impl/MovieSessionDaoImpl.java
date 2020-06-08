@@ -1,8 +1,8 @@
 package com.dev.cinema.dao.impl;
 
+import com.dev.cinema.dao.MovieSessionDao;
 import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.MovieSession;
-import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.util.HibernateUtil;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
-public class MovieSessionDaoImpl implements MovieSessionService {
+public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
