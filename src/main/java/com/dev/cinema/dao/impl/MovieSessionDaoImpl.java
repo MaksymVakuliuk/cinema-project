@@ -1,8 +1,8 @@
 package com.dev.cinema.dao.impl;
 
+import com.dev.cinema.dao.MovieSessionDao;
 import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.MovieSession;
-import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.util.HibernateUtil;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
-public class MovieSessionDaoImpl implements MovieSessionService {
+public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
@@ -46,6 +46,8 @@ public class MovieSessionDaoImpl implements MovieSessionService {
             CriteriaQuery<MovieSession> criteriaQuery =
                     session.getCriteriaBuilder().createQuery(MovieSession.class);
             Root<MovieSession> root = criteriaQuery.from(MovieSession.class);
+            root.fetch("movie");
+            root.fetch("cinemaHall");
             Predicate moviePredicate = cb.equal(root.get("movie"), movieId);
             Predicate datePredicate = cb.between(root.get("showTime"),
                     date.atStartOfDay(),

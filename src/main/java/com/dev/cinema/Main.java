@@ -8,6 +8,7 @@ import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import java.time.LocalDate;
@@ -27,6 +28,8 @@ public class Main {
             (UserService) INJECTOR.getInstance(UserService.class);
     private static ShoppingCartService shoppingCartService =
             (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
+    private static OrderService orderService =
+            (OrderService) INJECTOR.getInstance(OrderService.class);
 
     public static void main(String[] args) {
         Movie fastAndFurious = new Movie();
@@ -85,6 +88,7 @@ public class Main {
         System.out.println(user2);
 
         shoppingCartService.addSession(fastAndFuriousSession, user1);
+        shoppingCartService.addSession(fastAndFuriousSession, user1);
         shoppingCartService.addSession(readyPlayerOneSession, user1);
         shoppingCartService.addSession(readyPlayerOneSession, user2);
 
@@ -92,6 +96,11 @@ public class Main {
         System.out.println("By user 1: " + byUser1.toString());
         var byUser2 = shoppingCartService.getByUser(user2);
         System.out.println("By user 2: " + byUser2.toString());
+
+        orderService.completeOrder(byUser1.getTickets(), user1);
+        orderService.completeOrder(byUser2.getTickets(), user2);
+        var orders = orderService.getOrderHistory(user1);
+        orders.stream().forEach(System.out::println);
 
         System.out.println("End");
     }
