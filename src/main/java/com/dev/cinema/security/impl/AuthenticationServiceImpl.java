@@ -21,7 +21,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User login(String login, String password) throws AuthenticationException {
-        User user = userService.findByEmail(login);
+        User user = userService.findById(login);
         if (HashUtil.isValidPassword(user.getPassword(), password, user.getSalt())) {
             return user;
         }
