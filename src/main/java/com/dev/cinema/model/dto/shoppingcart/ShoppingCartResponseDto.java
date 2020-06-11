@@ -2,7 +2,6 @@ package com.dev.cinema.model.dto.shoppingcart;
 
 import com.dev.cinema.model.dto.ticket.TicketResponseDto;
 import com.dev.cinema.model.dto.user.UserResponseDto;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
