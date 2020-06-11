@@ -7,8 +7,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import com.dev.cinema.model.Movie;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -49,7 +47,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            CriteriaBuilder cb  = session.getCriteriaBuilder();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<CinemaHall> criteriaQuery =
                     session.getCriteriaBuilder().createQuery(CinemaHall.class);
             Root<CinemaHall> root = criteriaQuery.from(CinemaHall.class);

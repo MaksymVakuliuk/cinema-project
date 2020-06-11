@@ -7,7 +7,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -26,7 +25,7 @@ public class MovieDaoImpl implements MovieDao {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            CriteriaBuilder cb  = session.getCriteriaBuilder();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<Movie> criteriaQuery =
                     session.getCriteriaBuilder().createQuery(Movie.class);
             Root<Movie> root = criteriaQuery.from(Movie.class);
