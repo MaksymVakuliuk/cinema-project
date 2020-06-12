@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -41,8 +40,7 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<OrderResponseDto> getHistory(
-            @RequestParam(name = "userId", required = true) Long userId) {
+    public List<OrderResponseDto> getHistory(Long userId) {
         return orderService.getOrderHistory(userService.findById(userId))
                 .stream()
                 .map(orderMapper::convertToResponseDto)

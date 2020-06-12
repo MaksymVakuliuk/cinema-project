@@ -8,7 +8,6 @@ import com.dev.cinema.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -29,16 +28,14 @@ public class ShoppingCartController {
         this.movieSessionService = movieSessionService;
     }
 
-    @PostMapping("/addmoviesession")
-    public void add(@RequestParam(name = "movieSessionId", required = true) Long movieSessionId,
-                    @RequestParam(name = "userId", required = true) Long userId) {
+    @PostMapping("/add-movie-session")
+    public void add(Long movieSessionId, Long userId) {
         shoppingCartService.addSession(movieSessionService.findById(movieSessionId),
                 userService.findById(userId));
     }
 
-    @GetMapping("/byuser")
-    public ShoppingCartResponseDto getByUser(
-            @RequestParam(name = "userId", required = true) Long userId) {
+    @GetMapping("/by-user")
+    public ShoppingCartResponseDto getByUser(Long userId) {
         return shoppingCartMapper.convertToResponseDto(
                 shoppingCartService.getByUser(userService.findById(userId)));
     }
