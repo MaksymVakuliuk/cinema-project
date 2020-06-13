@@ -1,6 +1,7 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.MovieSessionDao;
+import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.MovieSession;
 import java.time.LocalDate;
 import java.util.List;
@@ -35,7 +36,29 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can't insert MovieSession entity", e);
+            throw new DataProcessingException("Can't insert MovieSession entity", e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public MovieSession findById(Long id) {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<MovieSession> criteriaQuery =
+                    session.getCriteriaBuilder().createQuery(MovieSession.class);
+            Root<MovieSession> root = criteriaQuery.from(MovieSession.class);
+            root.fetch("movie");
+            root.fetch("cinemaHall");
+            Predicate idPredicate = cb.equal(root.get("id"), id);
+            return session.createQuery(criteriaQuery.where(idPredicate)).uniqueResult();
+        } catch (Exception e) {
+            throw new DataProcessingException("Error retrieving MovieSession by id", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -61,7 +84,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return session.createQuery(criteriaQuery.where(moviePredicate, datePredicate))
                     .getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Error retrieving all MovieSessions", e);
+            throw new DataProcessingException("Error retrieving all MovieSessions", e);
         } finally {
             if (session != null) {
                 session.close();
