@@ -16,7 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .inMemoryAuthentication()
                 .passwordEncoder(getEncoder())
-                .withUser("user").password(getEncoder().encode("pass")).roles("USER");
+                .withUser("mymail@gmail.com").password(getEncoder().encode("pass")).roles("USER");
     }
 
     protected void configure(HttpSecurity http) throws Exception {
@@ -27,7 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .permitAll()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .csrf().disable();
     }
 
     @Bean
