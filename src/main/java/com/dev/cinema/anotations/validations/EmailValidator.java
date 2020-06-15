@@ -5,7 +5,7 @@ import javax.validation.ConstraintValidatorContext;
 
 public class EmailValidator implements
         ConstraintValidator<EmailConstraint, String> {
-    private final static String EMAIL_REGEX = "^[\\w-+]+(\\.[\\w]+)*@([\\w-+]+(\\.[\\w]+)*)";
+    private static final String EMAIL_REGEX = "^[\\w-+]+(\\.[\\w]+)*@([\\w-+]+(\\.[\\w]+)*)";
 
     @Override
     public void initialize(EmailConstraint emailConstraint) {

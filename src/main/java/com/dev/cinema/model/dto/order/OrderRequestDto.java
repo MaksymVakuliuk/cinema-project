@@ -1,8 +1,7 @@
 package com.dev.cinema.model.dto.order;
 
-import org.springframework.stereotype.Component;
-
 import javax.validation.constraints.NotNull;
+import org.springframework.stereotype.Component;
 
 @Component
 public class OrderRequestDto {

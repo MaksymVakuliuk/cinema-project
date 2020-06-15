@@ -1,8 +1,8 @@
 package com.dev.cinema.model.dto.shoppingcart;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
 public class ShoppingCartRequestDto {
     @NotNull

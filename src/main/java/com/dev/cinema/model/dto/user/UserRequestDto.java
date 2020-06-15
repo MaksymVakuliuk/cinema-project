@@ -1,7 +1,6 @@
 package com.dev.cinema.model.dto.user;
 
 import com.dev.cinema.anotations.validations.EmailConstraint;
-
 import javax.validation.constraints.NotNull;
 
 public class UserRequestDto {
