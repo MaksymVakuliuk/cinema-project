@@ -1,11 +1,15 @@
 package com.dev.cinema.model.dto.shoppingcart;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class ShoppingCartRequestDto {
+    @NotNull
     private List<Long> ticketsId;
+    @NotNull
     private LocalDateTime localDateTime;
+    @NotNull
     private Long userId;
 
     public List<Long> getTicketsId() {

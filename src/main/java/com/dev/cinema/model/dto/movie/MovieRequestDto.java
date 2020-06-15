@@ -1,7 +1,13 @@
 package com.dev.cinema.model.dto.movie;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class MovieRequestDto {
+    @NotNull
+    @NotEmpty(message = "Please provide a movie's title")
     private String title;
+    @NotNull
     private String description;
 
     public String getTitle() {

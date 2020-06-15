@@ -1,7 +1,11 @@
 package com.dev.cinema.model.dto.ticket;
 
+import javax.validation.constraints.NotNull;
+
 public class TicketRequestDto {
+    @NotNull
     private Long movieSessionId;
+    @NotNull
     private Long userId;
 
     public Long getMovieSessionId() {

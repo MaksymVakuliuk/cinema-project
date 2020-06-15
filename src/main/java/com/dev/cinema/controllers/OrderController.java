@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -35,7 +37,7 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    public void complete(@RequestBody OrderRequestDto orderRequestDto) {
+    public void complete(@Valid @RequestBody OrderRequestDto orderRequestDto) {
         var shoppingCart = shoppingCartService.getByUser(
                 userService.findById(orderRequestDto.getUserId()));
         orderService.completeOrder(shoppingCart.getTickets(), shoppingCart.getUser());

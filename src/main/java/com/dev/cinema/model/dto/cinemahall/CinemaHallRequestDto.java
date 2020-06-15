@@ -1,7 +1,11 @@
 package com.dev.cinema.model.dto.cinemahall;
 
+import javax.validation.constraints.NotNull;
+
 public class CinemaHallRequestDto {
+    @NotNull
     private int capacity;
+    @NotNull(message = "Please provide a description of cinema hall")
     private String description;
 
     public int getCapacity() {
