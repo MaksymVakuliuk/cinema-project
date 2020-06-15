@@ -12,17 +12,20 @@ import org.springframework.stereotype.Service;
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserService userService;
     private final ShoppingCartService shoppingCartService;
+    private final HashUtil hashUtil;
 
     public AuthenticationServiceImpl(UserService userService,
-                                     ShoppingCartService shoppingCartService) {
+                                     ShoppingCartService shoppingCartService,
+                                     HashUtil hashUtil) {
         this.userService = userService;
         this.shoppingCartService = shoppingCartService;
+        this.hashUtil = hashUtil;
     }
 
     @Override
     public User login(String login, String password) throws AuthenticationException {
         User user = userService.findByEmail(login);
-        if (HashUtil.isValidPassword(user.getPassword(), password, user.getSalt())) {
+        if (hashUtil.isValidPassword(user.getPassword(), password, user.getSalt())) {
             return user;
         }
         throw new AuthenticationException("Incorrect login or password.");
