@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,8 +43,7 @@ public class OrderController {
 
     @GetMapping
     public List<OrderResponseDto> getHistory(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return orderService.getOrderHistory(userService.findByEmail(userDetails.getUsername()))
+        return orderService.getOrderHistory(userService.findByEmail(authentication.getName()))
                 .stream()
                 .map(orderMapper::convertToResponseDto)
                 .collect(Collectors.toList());
