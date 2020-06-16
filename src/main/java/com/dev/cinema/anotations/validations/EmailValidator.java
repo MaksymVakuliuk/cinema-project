@@ -8,11 +8,6 @@ public class EmailValidator implements
     private static final String EMAIL_REGEX = "^[\\w-+]+(\\.[\\w]+)*@([\\w-+]+(\\.[\\w]+)*)";
 
     @Override
-    public void initialize(EmailConstraint emailConstraint) {
-
-    }
-
-    @Override
     public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
         return email != null && email.matches(EMAIL_REGEX);
     }
