@@ -8,6 +8,8 @@ import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,15 +35,15 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    public void complete(@RequestBody OrderRequestDto orderRequestDto) {
+    public void complete(@Valid @RequestBody OrderRequestDto orderRequestDto) {
         var shoppingCart = shoppingCartService.getByUser(
                 userService.findById(orderRequestDto.getUserId()));
         orderService.completeOrder(shoppingCart.getTickets(), shoppingCart.getUser());
     }
 
     @GetMapping
-    public List<OrderResponseDto> getHistory(Long userId) {
-        return orderService.getOrderHistory(userService.findById(userId))
+    public List<OrderResponseDto> getHistory(Authentication authentication) {
+        return orderService.getOrderHistory(userService.findByEmail(authentication.getName()))
                 .stream()
                 .map(orderMapper::convertToResponseDto)
                 .collect(Collectors.toList());

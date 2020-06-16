@@ -8,17 +8,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserDao userDao;
+    private final UserDao userDao;
+    private final HashUtil hashUtil;
 
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, HashUtil hashUtil) {
         this.userDao = userDao;
+        this.hashUtil = hashUtil;
     }
 
     @Override
     public User add(User user) {
-        byte[] salt = HashUtil.getSalt();
+        byte[] salt = hashUtil.getSalt();
         user.setSalt(salt);
-        user.setPassword(HashUtil.hashPassword(user.getPassword(), salt));
+        user.setPassword(hashUtil.hashPassword(user.getPassword(), salt));
         return userDao.add(user);
     }
 
