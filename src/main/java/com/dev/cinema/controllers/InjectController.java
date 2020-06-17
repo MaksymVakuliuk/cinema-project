@@ -14,7 +14,9 @@ import com.dev.cinema.service.RoleService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 import java.time.LocalDateTime;
+import java.util.Set;
 import javax.annotation.PostConstruct;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,6 +29,7 @@ public class InjectController {
     private final ShoppingCartService shoppingCartService;
     private final OrderService orderService;
     private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
     public InjectController(CinemaHallService cinemaHallService,
                             MovieService movieService,
@@ -35,7 +38,8 @@ public class InjectController {
                             UserService userService,
                             ShoppingCartService shoppingCartService,
                             OrderService orderService,
-                            RoleService roleService) {
+                            RoleService roleService,
+                            PasswordEncoder passwordEncoder) {
         this.cinemaHallService = cinemaHallService;
         this.movieService = movieService;
         this.movieSessionService = movieSessionService;
@@ -44,6 +48,7 @@ public class InjectController {
         this.shoppingCartService = shoppingCartService;
         this.orderService = orderService;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
@@ -64,12 +69,12 @@ public class InjectController {
     private void insertDate() {
         User admin = new User();
         admin.setEmail("admin@gmail.com");
-        admin.setPassword("password");
-        //admin.setRoles(Set.of(roleService.getRoleByName("ADMIN")));
+        admin.setPassword(passwordEncoder.encode("password"));
+        admin.setRoles(Set.of(roleService.getRoleByName("ADMIN")));
         userService.add(admin);
 
-        authenticationService.register("user@gmail.com", "123");
-        authenticationService.register("fs@gmail.com", "234");
+        authenticationService.register("user@gmail.com","userpass");
+        authenticationService.register("fs@gmail.com", "fspass");
 
         Movie fastAndFurious = new Movie();
         fastAndFurious.setTitle("Fast and Furious");
@@ -112,9 +117,7 @@ public class InjectController {
         shoppingCartService.addSession(readyPlayerOneSession, user2);
 
         var byUser1 = shoppingCartService.getByUser(user1);
-        System.out.println("By user 1: " + byUser1.toString());
         var byUser2 = shoppingCartService.getByUser(user2);
-        System.out.println("By user 2: " + byUser2.toString());
 
         orderService.completeOrder(byUser1.getTickets(), user1);
         orderService.completeOrder(byUser2.getTickets(), user2);

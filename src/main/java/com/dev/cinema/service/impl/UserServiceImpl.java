@@ -3,24 +3,19 @@ package com.dev.cinema.service.impl;
 import com.dev.cinema.dao.UserDao;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.UserService;
-import com.dev.cinema.util.HashUtil;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
-    private final HashUtil hashUtil;
 
-    public UserServiceImpl(UserDao userDao, HashUtil hashUtil) {
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
-        this.hashUtil = hashUtil;
     }
 
     @Override
     public User add(User user) {
-        byte[] salt = hashUtil.getSalt();
-        user.setSalt(salt);
-        user.setPassword(hashUtil.hashPassword(user.getPassword(), salt));
+        user.setPassword(user.getPassword());
         return userDao.add(user);
     }
 
