@@ -63,6 +63,7 @@ public class UserDaoImpl implements UserDao {
             CriteriaQuery<User> criteriaQuery =
                     session.getCriteriaBuilder().createQuery(User.class);
             Root<User> root = criteriaQuery.from(User.class);
+            root.fetch("roles");
             Predicate emailPredicate = cb.equal(root.get("email"), email);
             return session.createQuery(criteriaQuery.where(emailPredicate)).uniqueResult();
         } catch (Exception e) {
