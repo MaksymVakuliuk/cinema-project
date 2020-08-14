@@ -1,6 +1,7 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.MovieDao;
+import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.Movie;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -32,7 +33,7 @@ public class MovieDaoImpl implements MovieDao {
             Predicate idPredicate = cb.equal(root.get("id"), id);
             return session.createQuery(criteriaQuery.where(idPredicate)).uniqueResult();
         } catch (Exception e) {
-            throw new RuntimeException("Error retrieving Movie by id", e);
+            throw new DataProcessingException("Error retrieving Movie by id", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -54,7 +55,7 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can't insert Movie entity", e);
+            throw new DataProcessingException("Can't insert Movie entity", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -72,7 +73,7 @@ public class MovieDaoImpl implements MovieDao {
             criteriaQuery.from(Movie.class);
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Error retrieving all Movies", e);
+            throw new DataProcessingException("Error retrieving all Movies", e);
         } finally {
             if (session != null) {
                 session.close();

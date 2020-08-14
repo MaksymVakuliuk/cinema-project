@@ -1,6 +1,7 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.CinemaHallDao;
+import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.CinemaHall;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -34,7 +35,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can't insert CinemaHall entity", e);
+            throw new DataProcessingException("Can't insert CinemaHall entity", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -54,7 +55,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             Predicate idPredicate = cb.equal(root.get("id"), id);
             return session.createQuery(criteriaQuery.where(idPredicate)).uniqueResult();
         } catch (Exception e) {
-            throw new RuntimeException("Error retrieving CinemaHall by id", e);
+            throw new DataProcessingException("Error retrieving CinemaHall by id", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -72,7 +73,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             criteriaQuery.from(CinemaHall.class);
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Error retrieving all CinemaHalls", e);
+            throw new DataProcessingException("Error retrieving all CinemaHalls", e);
         } finally {
             if (session != null) {
                 session.close();
