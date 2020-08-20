@@ -1,5 +1,4 @@
 # cinema-project
-# Internet shop
    * [Short Description](#description)
    * [Project Structure](#structure)
    * [Setup Guide](#setup)
