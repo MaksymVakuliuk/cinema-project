@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String ADMIN_ROLE = "ADMIN";
+    private static final String USER_ROLE = "USER";
     private final UserDetailsService userDetailsService;
 
     public SecurityConfig(UserDetailsService userDetailsService) {
@@ -27,15 +29,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/cinema-halls/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/cinema-halls/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/movies/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/movies/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/movie-sessions/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/movies-sessions/**").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "/shopping-carts/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/shopping-carts/**").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/users/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/cinema-halls/**").hasRole(ADMIN_ROLE)
+                .antMatchers(HttpMethod.POST, "/movies/**").hasRole(ADMIN_ROLE)
+                .antMatchers(HttpMethod.POST, "/movie-sessions/**").hasRole(ADMIN_ROLE)
+                .antMatchers(HttpMethod.POST, "/shopping-carts/**").hasRole(USER_ROLE)
+                .antMatchers(HttpMethod.GET, "/shopping-carts/**").hasRole(USER_ROLE)
+                .antMatchers("/orders/**").hasRole(USER_ROLE)
+                .antMatchers(HttpMethod.GET, "/users/**").hasRole(ADMIN_ROLE)
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
